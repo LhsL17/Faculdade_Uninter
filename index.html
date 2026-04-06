@@ -3,639 +3,747 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Conecta Fácil | Inclusão Digital</title>
-  <meta name="description" content="Plataforma educativa de inclusão digital para pessoas com pouca familiaridade com tecnologia." />
+  <title>Conecta Fácil - Aprenda Tecnologia com Segurança</title>
+  <meta name="description" content="Plataforma educativa para adultos e idosos aprenderem a usar internet, aplicativos, senhas e serviços digitais com segurança." />
   <style>
-    :root {
-      --bg: #f4f7fb;
-      --surface: #ffffff;
-      --surface-2: #eef3f9;
-      --text: #1c2430;
-      --muted: #5f6b7a;
-      --primary: #0b63ce;
-      --primary-dark: #084b9b;
-      --secondary: #16a34a;
-      --accent: #f59e0b;
-      --border: #dbe3ee;
-      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-      --radius: 18px;
-      --maxw: 1180px;
-      --header-h: 78px;
-      --font-scale: 1;
+    :root{
+      --bg:#f5f8fc;
+      --card:#ffffff;
+      --card-soft:#eef4fb;
+      --text:#1c2733;
+      --muted:#5f6f82;
+      --primary:#0b63ce;
+      --primary-2:#084c9b;
+      --secondary:#1f9d55;
+      --warning:#f59e0b;
+      --danger:#dc2626;
+      --border:#d9e3ef;
+      --shadow:0 10px 28px rgba(15, 23, 42, 0.08);
+      --radius:20px;
+      --font-scale:1;
     }
 
-    body.high-contrast {
-      --bg: #000000;
-      --surface: #121212;
-      --surface-2: #1b1b1b;
-      --text: #ffffff;
-      --muted: #d1d5db;
-      --primary: #ffd400;
-      --primary-dark: #ffbf00;
-      --secondary: #00d26a;
-      --accent: #00c2ff;
-      --border: #3b3b3b;
-      --shadow: none;
+    body.high-contrast{
+      --bg:#000000;
+      --card:#121212;
+      --card-soft:#1b1b1b;
+      --text:#ffffff;
+      --muted:#e5e7eb;
+      --primary:#ffd400;
+      --primary-2:#ffbf00;
+      --secondary:#00d26a;
+      --warning:#ffb300;
+      --danger:#ff5c5c;
+      --border:#3a3a3a;
+      --shadow:none;
     }
 
-    * {
-      box-sizing: border-box;
+    *{ box-sizing:border-box; }
+
+    html{
+      scroll-behavior:smooth;
+      font-size:calc(16px * var(--font-scale));
     }
 
-    html {
-      scroll-behavior: smooth;
-      font-size: calc(16px * var(--font-scale));
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.65;
+      transition:background .25s ease, color .25s ease;
     }
 
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      transition: background 0.25s ease, color 0.25s ease;
+    a{ color:inherit; text-decoration:none; }
+    img{ max-width:100%; display:block; }
+
+    .container{
+      width:min(1180px, calc(100% - 28px));
+      margin:0 auto;
     }
 
-    img {
-      max-width: 100%;
-      display: block;
+    .skip-link{
+      position:absolute;
+      left:12px;
+      top:-60px;
+      background:var(--primary);
+      color:#fff;
+      padding:12px 16px;
+      border-radius:12px;
+      z-index:999;
+      font-weight:700;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
+    .skip-link:focus{ top:12px; }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:100;
+      backdrop-filter:blur(10px);
+      background:rgba(255,255,255,.9);
+      border-bottom:1px solid var(--border);
     }
 
-    .container {
-      width: min(100% - 32px, var(--maxw));
-      margin: 0 auto;
+    body.high-contrast header{
+      background:rgba(0,0,0,.95);
     }
 
-    .skip-link {
-      position: absolute;
-      left: 12px;
-      top: -60px;
-      background: var(--primary);
-      color: #fff;
-      padding: 12px 16px;
-      border-radius: 10px;
-      z-index: 9999;
-      transition: top 0.2s;
-      font-weight: bold;
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+      padding:14px 0;
+      flex-wrap:wrap;
     }
 
-    .skip-link:focus {
-      top: 12px;
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
     }
 
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      height: var(--header-h);
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
+    .logo{
+      width:52px;
+      height:52px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, var(--primary), var(--secondary));
+      color:#fff;
+      font-size:1.2rem;
+      font-weight:900;
+      box-shadow:var(--shadow);
     }
 
-    body.high-contrast header {
-      background: rgba(0,0,0,0.95);
+    .brand h1{
+      margin:0;
+      font-size:1.25rem;
+      color:var(--primary);
     }
 
-    .nav {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
+    .brand p{
+      margin:0;
+      color:var(--muted);
+      font-size:.95rem;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 800;
-      font-size: 1.2rem;
-      color: var(--primary);
+    nav ul{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      list-style:none;
+      margin:0;
+      padding:0;
     }
 
-    .brand-logo {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: #fff;
-      font-size: 1.2rem;
-      box-shadow: var(--shadow);
+    nav a{
+      padding:10px 14px;
+      border-radius:12px;
+      color:var(--muted);
+      font-weight:700;
     }
 
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 10px;
-      padding: 0;
-      margin: 0;
-      flex-wrap: wrap;
+    nav a:hover{
+      background:var(--card-soft);
+      color:var(--primary);
     }
 
-    nav a {
-      padding: 10px 14px;
-      border-radius: 12px;
-      color: var(--muted);
-      font-weight: 700;
-      transition: 0.2s;
+    .toolbar{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
     }
 
-    nav a:hover,
-    nav a:focus {
-      background: var(--surface-2);
-      color: var(--primary);
-      outline: none;
+    button{
+      font:inherit;
     }
 
-    .toolbar {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
+    .tool-btn, .btn{
+      border:none;
+      cursor:pointer;
+      border-radius:14px;
+      transition:.2s ease;
     }
 
-    .tool-btn,
-    .btn {
-      border: none;
-      cursor: pointer;
-      border-radius: 12px;
-      font-weight: 700;
-      transition: 0.2s;
+    .tool-btn{
+      padding:10px 14px;
+      background:var(--card);
+      color:var(--text);
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      font-weight:700;
     }
 
-    .tool-btn {
-      background: var(--surface);
-      color: var(--text);
-      border: 1px solid var(--border);
-      padding: 10px 12px;
-      min-width: 48px;
-      box-shadow: var(--shadow);
+    .btn{
+      padding:14px 18px;
+      font-weight:800;
     }
 
-    .tool-btn:hover,
-    .btn:hover {
-      transform: translateY(-1px);
+    .btn-primary{
+      background:var(--primary);
+      color:#fff;
     }
 
-    .hero {
-      padding: 68px 0 42px;
+    .btn-primary:hover{ background:var(--primary-2); }
+
+    .btn-soft{
+      background:var(--card);
+      color:var(--text);
+      border:1px solid var(--border);
+    }
+
+    .hero{
+      padding:50px 0 30px;
       background:
-        radial-gradient(circle at top left, rgba(11,99,206,0.14), transparent 25%),
-        radial-gradient(circle at top right, rgba(22,163,74,0.12), transparent 24%);
+        radial-gradient(circle at top left, rgba(11,99,206,.12), transparent 25%),
+        radial-gradient(circle at top right, rgba(31,157,85,.12), transparent 22%);
     }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 28px;
-      align-items: center;
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:24px;
+      align-items:center;
     }
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 8px 14px;
-      border-radius: 999px;
-      color: var(--primary);
-      font-weight: 700;
-      box-shadow: var(--shadow);
-      margin-bottom: 18px;
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:999px;
+      padding:8px 14px;
+      color:var(--primary);
+      font-weight:800;
+      box-shadow:var(--shadow);
+      margin-bottom:16px;
     }
 
-    .hero h1 {
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      line-height: 1.1;
-      margin: 0 0 14px;
+    .hero h2{
+      margin:0 0 14px;
+      font-size:clamp(2rem, 4vw, 3.4rem);
+      line-height:1.12;
     }
 
-    .hero p {
-      margin: 0 0 22px;
-      color: var(--muted);
-      font-size: 1.08rem;
-      max-width: 760px;
+    .hero p{
+      margin:0 0 20px;
+      color:var(--muted);
+      font-size:1.08rem;
     }
 
-    .hero-actions {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-top: 20px;
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
     }
 
-    .btn {
-      padding: 14px 18px;
+    .hero-card, .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
     }
 
-    .btn-primary {
-      background: var(--primary);
-      color: #fff;
+    .hero-card{
+      padding:22px;
     }
 
-    .btn-primary:hover {
-      background: var(--primary-dark);
+    .hero-list{
+      list-style:none;
+      padding:0;
+      margin:0;
     }
 
-    .btn-secondary {
-      background: var(--surface);
-      color: var(--text);
-      border: 1px solid var(--border);
+    .hero-list li{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      padding:12px 0;
+      border-bottom:1px solid var(--border);
     }
 
-    .hero-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 22px;
-      box-shadow: var(--shadow);
+    .hero-list li:last-child{ border-bottom:none; }
+
+    .hero-icon{
+      width:32px;
+      height:32px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:rgba(31,157,85,.12);
+      color:var(--secondary);
+      font-weight:900;
+      flex-shrink:0;
     }
 
-    .hero-card h3 {
-      margin-top: 0;
-      margin-bottom: 12px;
+    section{
+      padding:34px 0;
     }
 
-    .hero-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+    .section-head{
+      margin-bottom:22px;
     }
 
-    .hero-list li {
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
+    .section-head h3{
+      margin:0 0 8px;
+      font-size:clamp(1.5rem, 3vw, 2.2rem);
     }
 
-    .hero-list li:last-child {
-      border-bottom: 0;
+    .section-head p{
+      margin:0;
+      color:var(--muted);
+      max-width:850px;
     }
 
-    .check {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: rgba(22,163,74,0.12);
-      color: var(--secondary);
-      font-weight: 900;
-      flex-shrink: 0;
+    .grid-2{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:20px;
     }
 
-    section {
-      padding: 50px 0;
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:20px;
     }
 
-    .section-title {
-      font-size: clamp(1.6rem, 3vw, 2.3rem);
-      margin: 0 0 10px;
+    .card{
+      padding:22px;
+      height:100%;
     }
 
-    .section-subtitle {
-      margin: 0 0 28px;
-      color: var(--muted);
-      max-width: 850px;
+    .card h4{
+      margin:0 0 10px;
+      font-size:1.2rem;
     }
 
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
+    .card p{
+      margin:0;
     }
 
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 22px;
+    .icon-box{
+      width:58px;
+      height:58px;
+      display:grid;
+      place-items:center;
+      border-radius:18px;
+      background:linear-gradient(135deg, rgba(11,99,206,.14), rgba(31,157,85,.14));
+      font-size:1.4rem;
+      margin-bottom:14px;
     }
 
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 22px;
-      box-shadow: var(--shadow);
-      height: 100%;
+    .speak-btn{
+      margin-top:14px;
+      padding:10px 14px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:var(--card-soft);
+      color:var(--text);
+      cursor:pointer;
+      font-weight:700;
     }
 
-    .card h3, .card h4 {
-      margin-top: 0;
-      margin-bottom: 12px;
+    .glossary-item{
+      padding:16px;
+      border-radius:16px;
+      background:var(--card-soft);
+      border:1px solid var(--border);
+      margin-bottom:12px;
+      position:relative;
     }
 
-    .icon {
-      width: 58px;
-      height: 58px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      font-size: 1.4rem;
-      margin-bottom: 14px;
-      background: linear-gradient(135deg, rgba(11,99,206,0.15), rgba(22,163,74,0.18));
+    .glossary-item h5{
+      margin:0 0 6px;
+      font-size:1.05rem;
+      color:var(--primary);
     }
 
-    .module-card ul {
-      padding-left: 18px;
-      margin-bottom: 0;
+    .glossary-item p{
+      margin:0;
     }
 
-    .steps {
-      display: grid;
-      gap: 14px;
+    .pulse{
+      animation:pulse 1.8s infinite;
     }
 
-    .step {
-      display: grid;
-      grid-template-columns: 64px 1fr;
-      gap: 16px;
-      align-items: start;
-      padding: 16px;
-      border-radius: 16px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
+    @keyframes pulse{
+      0%{ box-shadow:0 0 0 0 rgba(11,99,206,.35); }
+      70%{ box-shadow:0 0 0 14px rgba(11,99,206,0); }
+      100%{ box-shadow:0 0 0 0 rgba(11,99,206,0); }
     }
 
-    .step-number {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-      background: var(--primary);
-      color: #fff;
-      display: grid;
-      place-items: center;
-      font-size: 1.1rem;
-      font-weight: 800;
+    .hover-guide{
+      transition:transform .15s ease, box-shadow .15s ease;
     }
 
-    .diagram {
-      overflow-x: auto;
+    .hover-guide:hover{
+      transform:translateY(-2px) scale(1.01);
+      box-shadow:0 0 0 4px rgba(11,99,206,.12), var(--shadow);
     }
 
-    .diagram-box {
-      min-width: 880px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 24px;
-      box-shadow: var(--shadow);
+    .safe-box{
+      border-left:6px solid var(--secondary);
+      padding:18px;
+      background:rgba(31,157,85,.08);
+      border-radius:14px;
+      margin-top:16px;
+      font-weight:700;
     }
 
-    .flow {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: nowrap;
+    .fake-browser{
+      background:#dbe7f4;
+      border:1px solid var(--border);
+      border-radius:18px;
+      overflow:hidden;
+      margin-top:16px;
     }
 
-    .flow-item {
-      min-width: 150px;
-      text-align: center;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 18px 14px;
-      font-weight: 700;
+    .browser-top{
+      background:#c9d8ea;
+      padding:12px;
+      display:flex;
+      gap:8px;
+      align-items:center;
     }
 
-    .flow-arrow {
-      font-size: 1.8rem;
-      color: var(--primary);
-      font-weight: bold;
+    .dot{
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      background:#fff;
+      border:1px solid rgba(0,0,0,.08);
     }
 
-    .quiz-box {
-      background: var(--surface);
-      border-radius: 22px;
-      border: 1px solid var(--border);
-      padding: 24px;
-      box-shadow: var(--shadow);
+    .address-bar{
+      background:#fff;
+      border-radius:10px;
+      padding:10px 14px;
+      margin:10px 12px 12px;
+      border:1px solid var(--border);
+      font-weight:700;
+      color:#24435f;
     }
 
-    .question {
-      margin-bottom: 24px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--border);
+    .lock{
+      color:var(--secondary);
+      font-weight:900;
+      margin-right:6px;
     }
 
-    .question:last-child {
-      border-bottom: 0;
-      margin-bottom: 0;
-      padding-bottom: 0;
+    .browser-body{
+      background:#fff;
+      padding:18px;
+      color:#1c2733;
     }
 
-    .question h4 {
-      margin: 0 0 12px;
+    .phishing-demo{
+      background:#fff7f7;
+      border:2px dashed #f4b4b4;
+      border-radius:18px;
+      padding:20px;
+      position:relative;
     }
 
-    .question label {
-      display: block;
-      padding: 10px 12px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      margin-bottom: 10px;
-      cursor: pointer;
-      transition: 0.2s;
-      background: var(--surface);
+    .phishing-demo h5{
+      margin-top:0;
+      color:#b91c1c;
+      font-size:1.15rem;
     }
 
-    .question label:hover {
-      background: var(--surface-2);
+    .flag{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      background:#fff;
+      border-left:5px solid var(--danger);
+      font-weight:700;
+      color:#7f1d1d;
     }
 
-    .result {
-      margin-top: 22px;
-      padding: 16px;
-      border-radius: 14px;
-      font-weight: 700;
-      display: none;
+    .service-steps ol{
+      padding-left:22px;
+      margin:10px 0 0;
     }
 
-    .result.show {
-      display: block;
+    .service-steps li{
+      margin-bottom:8px;
     }
 
-    .result.success {
-      background: rgba(22,163,74,0.12);
-      color: #166534;
-      border: 1px solid rgba(22,163,74,0.25);
+    .simulator{
+      padding:22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, #fff, #f9fbfe);
+      border:1px solid var(--border);
     }
 
-    .result.warning {
-      background: rgba(245,158,11,0.12);
-      color: #92400e;
-      border: 1px solid rgba(245,158,11,0.28);
+    .fake-popup{
+      background:#ffffff;
+      border:2px solid #f3c56d;
+      border-radius:18px;
+      padding:20px;
+      box-shadow:var(--shadow);
+      max-width:520px;
+      margin:0 auto 16px;
+      text-align:center;
     }
 
-    body.high-contrast .result.success,
-    body.high-contrast .result.warning {
-      color: var(--text);
+    .fake-popup h4{
+      margin-top:0;
+      color:#b45309;
     }
 
-    .tech-list {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 16px;
+    .popup-actions{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:16px;
     }
 
-    .chip {
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      font-weight: 700;
+    .btn-danger{
+      background:var(--danger);
+      color:#fff;
     }
 
-    .code-box {
-      position: relative;
-      background: #0f172a;
-      color: #e2e8f0;
-      border-radius: 18px;
-      padding: 20px;
-      overflow-x: auto;
-      font-family: "Courier New", monospace;
-      font-size: 0.94rem;
-      line-height: 1.55;
-      box-shadow: var(--shadow);
+    .feedback-box{
+      margin-top:16px;
+      padding:14px 16px;
+      border-radius:14px;
+      display:none;
+      font-weight:700;
     }
 
-    .copy-btn {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: 0;
-      cursor: pointer;
-      font-weight: 700;
-      background: #1d4ed8;
-      color: white;
+    .feedback-box.show{
+      display:block;
     }
 
-    .ods-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+    .feedback-safe{
+      background:rgba(31,157,85,.12);
+      border:1px solid rgba(31,157,85,.25);
+      color:#166534;
     }
 
-    .ods-card {
-      border-radius: 18px;
-      padding: 20px;
-      color: #fff;
-      min-height: 170px;
-      box-shadow: var(--shadow);
+    .feedback-risk{
+      background:rgba(220,38,38,.12);
+      border:1px solid rgba(220,38,38,.25);
+      color:#991b1b;
     }
 
-    .ods-4 { background: #c5192d; }
-    .ods-9 { background: #fd6925; }
-    .ods-10 { background: #dd1367; }
-
-    .footer {
-      padding: 28px 0 40px;
-      color: var(--muted);
-      text-align: center;
+    body.high-contrast .feedback-safe,
+    body.high-contrast .feedback-risk{
+      color:var(--text);
     }
 
-    .muted {
-      color: var(--muted);
+    .password-tool input{
+      width:100%;
+      padding:14px 16px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      font-size:1rem;
+      background:var(--card);
+      color:var(--text);
+      margin:8px 0 14px;
     }
 
-    .highlight {
-      color: var(--primary);
-      font-weight: 800;
+    .meter{
+      width:100%;
+      height:18px;
+      background:var(--card-soft);
+      border-radius:999px;
+      overflow:hidden;
+      border:1px solid var(--border);
     }
 
-    @media (max-width: 980px) {
+    .meter-bar{
+      height:100%;
+      width:0%;
+      transition:.25s ease;
+    }
+
+    .meter-text{
+      margin-top:10px;
+      font-weight:700;
+      color:var(--muted);
+    }
+
+    .compare-grid{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:18px;
+      margin-top:16px;
+    }
+
+    .login-shot{
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:16px;
+      background:#fff;
+      color:#1c2733;
+    }
+
+    .login-shot h5{
+      margin-top:0;
+    }
+
+    .fake-bad{
+      border:2px solid #f3b0b0;
+      background:#fff7f7;
+    }
+
+    .spot-list{
+      display:grid;
+      gap:10px;
+      margin-top:16px;
+    }
+
+    .spot-list label{
+      display:block;
+      padding:12px 14px;
+      background:var(--card-soft);
+      border:1px solid var(--border);
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    .quiz-box{
+      padding:22px;
+    }
+
+    .question{
+      padding-bottom:18px;
+      margin-bottom:18px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .question:last-child{
+      margin-bottom:0;
+      padding-bottom:0;
+      border-bottom:none;
+    }
+
+    .question h5{
+      margin:0 0 12px;
+      font-size:1.08rem;
+    }
+
+    .question label{
+      display:block;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:var(--card-soft);
+      margin-bottom:10px;
+      cursor:pointer;
+    }
+
+    .result-box{
+      display:none;
+      margin-top:18px;
+      padding:16px;
+      border-radius:14px;
+      font-weight:800;
+    }
+
+    .result-box.show{
+      display:block;
+    }
+
+    .result-good{
+      background:rgba(31,157,85,.12);
+      border:1px solid rgba(31,157,85,.25);
+      color:#166534;
+    }
+
+    .result-mid{
+      background:rgba(245,158,11,.12);
+      border:1px solid rgba(245,158,11,.25);
+      color:#92400e;
+    }
+
+    .result-bad{
+      background:rgba(220,38,38,.12);
+      border:1px solid rgba(220,38,38,.25);
+      color:#991b1b;
+    }
+
+    body.high-contrast .result-good,
+    body.high-contrast .result-mid,
+    body.high-contrast .result-bad{
+      color:var(--text);
+    }
+
+    .footer{
+      text-align:center;
+      color:var(--muted);
+      padding:30px 0 40px;
+    }
+
+    .small{
+      font-size:.94rem;
+      color:var(--muted);
+    }
+
+    @media (max-width: 980px){
       .hero-grid,
-      .grid-3,
       .grid-2,
-      .ods-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .nav {
-        height: auto;
-        padding: 12px 0;
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      header {
-        height: auto;
-      }
-
-      nav ul {
-        gap: 6px;
+      .grid-3,
+      .compare-grid{
+        grid-template-columns:1fr;
       }
     }
 
-    @media (max-width: 680px) {
-      .hero {
-        padding-top: 38px;
+    @media (max-width: 720px){
+      .topbar{
+        align-items:flex-start;
       }
 
-      .toolbar {
-        width: 100%;
+      nav ul{
+        gap:6px;
       }
 
-      .tool-btn {
-        flex: 1;
+      .toolbar{
+        width:100%;
       }
 
-      .step {
-        grid-template-columns: 1fr;
-      }
-
-      .step-number {
-        width: 48px;
-        height: 48px;
+      .tool-btn{
+        flex:1;
       }
     }
   </style>
 </head>
 <body>
-  <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
 
   <header>
-    <div class="container nav">
+    <div class="container topbar">
       <div class="brand">
-        <div class="brand-logo">CF</div>
+        <div class="logo">CF</div>
         <div>
-          <div>Conecta Fácil</div>
-          <small class="muted">Inclusão Digital com linguagem simples</small>
+          <h1>Conecta Fácil</h1>
+          <p>Aprenda tecnologia com calma, segurança e linguagem simples</p>
         </div>
       </div>
 
       <nav aria-label="Menu principal">
         <ul>
           <li><a href="#inicio">Início</a></li>
-          <li><a href="#sobre">Sobre</a></li>
-          <li><a href="#modulos">Módulos</a></li>
-          <li><a href="#metodologia">Metodologia</a></li>
+          <li><a href="#dicionario">Dicionário</a></li>
+          <li><a href="#seguranca">Segurança</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#praticar">Praticar</a></li>
           <li><a href="#quiz">Quiz</a></li>
-          <li><a href="#tecnologias">Tecnologias</a></li>
-          <li><a href="#ods">ODS</a></li>
         </ul>
       </nav>
 
-      <div class="toolbar" aria-label="Ferramentas de acessibilidade">
-        <button class="tool-btn" onclick="diminuirFonte()" aria-label="Diminuir tamanho da fonte">A-</button>
-        <button class="tool-btn" onclick="aumentarFonte()" aria-label="Aumentar tamanho da fonte">A+</button>
-        <button class="tool-btn" onclick="alternarContraste()" aria-label="Alternar modo de alto contraste">Contraste</button>
+      <div class="toolbar">
+        <button class="tool-btn hover-guide pulse" onclick="aumentarFonte()">A+</button>
+        <button class="tool-btn hover-guide" onclick="diminuirFonte()">A-</button>
+        <button class="tool-btn hover-guide" onclick="alternarContraste()">Contraste</button>
+        <button class="tool-btn hover-guide" onclick="falarPagina()">Ouvir página</button>
       </div>
     </div>
   </header>
@@ -644,356 +752,341 @@
     <section class="hero" id="inicio">
       <div class="container hero-grid">
         <div>
-          <div class="badge">💻 Projeto de TI com impacto social</div>
-          <h1>Plataforma web para <span class="highlight">alfabetização digital</span> de pessoas leigas em tecnologia</h1>
+          <div class="badge">💙 Você está em um lugar seguro para aprender</div>
+          <h2>Entenda a internet e os aplicativos sem medo de errar</h2>
           <p>
-            O Conecta Fácil é uma plataforma educativa criada para orientar pessoas com pouca familiaridade
-            com tecnologia no uso básico da internet, segurança digital, e-mail, aplicativos e boas práticas online.
-            O objetivo é promover inclusão digital de forma prática, acessível e intuitiva.
+            Esta plataforma foi criada para ajudar adultos e idosos que têm dificuldade com celular,
+            computador, internet, senhas, mensagens suspeitas e serviços digitais. Aqui, tudo foi feito
+            com explicações simples, exemplos visuais e atividades práticas.
           </p>
-
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#modulos">Explorar módulos</a>
-            <a class="btn btn-secondary" href="#quiz">Fazer quiz</a>
+            <a class="btn btn-primary hover-guide pulse" href="#dicionario">Começar agora</a>
+            <a class="btn btn-soft hover-guide" href="#praticar">Treinar com exemplos</a>
+          </div>
+          <div class="safe-box">
+            Dica importante: clicar nos botões deste site é seguro. Ele foi feito para você aprender com tranquilidade.
           </div>
         </div>
 
         <div class="hero-card">
-          <h3>O que esta plataforma oferece?</h3>
+          <h3 style="margin-top:0;">O que você vai aprender aqui</h3>
           <ul class="hero-list">
-            <li>
-              <span class="check">✓</span>
-              <div><strong>Conteúdo simplificado</strong><br>Explicações objetivas e em linguagem acessível.</div>
-            </li>
-            <li>
-              <span class="check">✓</span>
-              <div><strong>Acessibilidade</strong><br>Opções de contraste e ajuste de fonte.</div>
-            </li>
-            <li>
-              <span class="check">✓</span>
-              <div><strong>Interatividade</strong><br>Quiz para reforçar o aprendizado.</div>
-            </li>
-            <li>
-              <span class="check">✓</span>
-              <div><strong>Responsividade</strong><br>Funciona em celular, tablet e computador.</div>
-            </li>
+            <li><span class="hero-icon">✓</span><div><strong>Palavras difíceis explicadas</strong><br>Entenda termos como link, nuvem, navegador e senha forte.</div></li>
+            <li><span class="hero-icon">✓</span><div><strong>Como identificar golpes</strong><br>Aprenda a desconfiar de mensagens urgentes, links estranhos e promoções falsas.</div></li>
+            <li><span class="hero-icon">✓</span><div><strong>Serviços importantes</strong><br>Veja como acessar plataformas usadas no dia a dia do cidadão.</div></li>
+            <li><span class="hero-icon">✓</span><div><strong>Aprendizado prático</strong><br>Faça testes, simulações e atividades interativas.</div></li>
           </ul>
         </div>
       </div>
     </section>
 
-    <section id="sobre">
+    <section id="dicionario">
       <div class="container">
-        <h2 class="section-title">Sobre o projeto</h2>
-        <p class="section-subtitle">
-          Esta solução foi desenvolvida para atender um grupo de pessoas com baixa alfabetização digital,
-          especialmente adultos e idosos que enfrentam dificuldades no uso cotidiano da tecnologia.
-          A proposta une educação e TI por meio de um site informativo, responsivo e acessível.
-        </p>
-
-        <div class="grid-3">
-          <article class="card">
-            <div class="icon">🎯</div>
-            <h3>Objetivo principal</h3>
-            <p>
-              Ensinar noções básicas de tecnologia, navegação segura e uso de ferramentas digitais
-              por meio de uma plataforma web intuitiva.
-            </p>
-          </article>
-
-          <article class="card">
-            <div class="icon">👥</div>
-            <h3>Público-alvo</h3>
-            <p>
-              Pessoas leigas em tecnologia, com pouca experiência em internet, aplicativos,
-              criação de senhas e prevenção contra golpes digitais.
-            </p>
-          </article>
-
-          <article class="card">
-            <div class="icon">🌐</div>
-            <h3>Aplicação prática</h3>
-            <p>
-              O sistema pode ser apresentado em oficinas, grupos de capacitação, turmas de extensão
-              ou atendimentos orientados de inclusão digital.
-            </p>
-          </article>
+        <div class="section-head">
+          <h3>Dicionário de “tecnês”</h3>
+          <p>Algumas palavras da tecnologia parecem complicadas. Aqui elas são traduzidas para o jeito mais simples possível.</p>
         </div>
-      </div>
-    </section>
-
-    <section id="modulos">
-      <div class="container">
-        <h2 class="section-title">Módulos educativos</h2>
-        <p class="section-subtitle">
-          A plataforma foi organizada em módulos temáticos para facilitar o entendimento e a navegação do usuário.
-        </p>
 
         <div class="grid-2">
-          <article class="card module-card">
-            <div class="icon">🌍</div>
-            <h3>1. Noções básicas de internet</h3>
-            <ul>
-              <li>O que é internet e para que ela serve</li>
-              <li>Como acessar sites com segurança</li>
-              <li>Como pesquisar informações úteis</li>
-              <li>Cuidados ao clicar em links desconhecidos</li>
-            </ul>
-          </article>
+          <div class="card">
+            <div class="glossary-item">
+              <h5>Nuvem ☁️</h5>
+              <p>Não é chuva. “Nuvem” é um computador na internet que guarda suas fotos, vídeos e arquivos.</p>
+            </div>
+            <div class="glossary-item">
+              <h5>Link 🔗</h5>
+              <p>É como uma porta que leva você para outra página, outro vídeo ou outro conteúdo.</p>
+            </div>
+            <div class="glossary-item">
+              <h5>Navegador 🌍</h5>
+              <p>É o programa usado para entrar na internet, como Chrome, Edge, Safari ou Firefox.</p>
+            </div>
+            <div class="glossary-item">
+              <h5>Aplicativo 📱</h5>
+              <p>É um programa instalado no celular ou no computador para realizar alguma tarefa.</p>
+            </div>
+            <button class="speak-btn hover-guide" onclick="falarTexto('textoDicionario1')">▶ Ouvir explicações</button>
+            <div id="textoDicionario1" class="small" style="margin-top:10px;">
+              Nuvem é um local na internet para guardar arquivos. Link é uma porta para outra página.
+              Navegador é o programa usado para acessar a internet. Aplicativo é um programa instalado no celular.
+            </div>
+          </div>
 
-          <article class="card module-card">
-            <div class="icon">🔐</div>
-            <h3>2. Senhas seguras</h3>
-            <ul>
-              <li>Como criar senhas fortes</li>
-              <li>Evitar datas de nascimento e sequências fáceis</li>
-              <li>Importância de não compartilhar senhas</li>
-              <li>Uso consciente de autenticação em duas etapas</li>
-            </ul>
-          </article>
-
-          <article class="card module-card">
-            <div class="icon">📧</div>
-            <h3>3. Uso de e-mail e aplicativos</h3>
-            <ul>
-              <li>Como enviar e receber mensagens</li>
-              <li>Reconhecer anexos e mensagens confiáveis</li>
-              <li>Noções de aplicativos de comunicação</li>
-              <li>Organização básica da rotina digital</li>
-            </ul>
-          </article>
-
-          <article class="card module-card">
-            <div class="icon">🛡️</div>
-            <h3>4. Golpes digitais</h3>
-            <ul>
-              <li>Como identificar mensagens falsas</li>
-              <li>Reconhecimento de tentativas de fraude</li>
-              <li>Verificação de links e contatos suspeitos</li>
-              <li>Cuidados com dados pessoais na internet</li>
-            </ul>
-          </article>
+          <div class="card">
+            <div class="glossary-item">
+              <h5>Senha forte 🔐</h5>
+              <p>É uma senha difícil de adivinhar, com mistura de letras, números e símbolos.</p>
+            </div>
+            <div class="glossary-item">
+              <h5>Golpe digital 🚨</h5>
+              <p>É uma tentativa de enganar a pessoa para roubar dinheiro, dados ou senhas.</p>
+            </div>
+            <div class="glossary-item">
+              <h5>HTTPS e Cadeado 🔒</h5>
+              <p>Quando o site mostra um cadeado, isso indica uma conexão mais protegida.</p>
+            </div>
+            <div class="glossary-item">
+              <h5>Login 👤</h5>
+              <p>É o ato de entrar em uma conta usando usuário, e-mail ou CPF junto com a senha.</p>
+            </div>
+            <button class="speak-btn hover-guide" onclick="falarTexto('textoDicionario2')">▶ Ouvir explicações</button>
+            <div id="textoDicionario2" class="small" style="margin-top:10px;">
+              Senha forte é uma senha mais difícil de descobrir. Golpe digital é uma tentativa de enganar.
+              HTTPS com cadeado mostra uma conexão mais segura. Login é entrar em uma conta.
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="metodologia">
+    <section id="seguranca">
       <div class="container">
-        <h2 class="section-title">Metodologia</h2>
-        <p class="section-subtitle">
-          O projeto foi estruturado em etapas sequenciais, desde a identificação das dificuldades do público-alvo
-          até a construção da plataforma e avaliação dos resultados.
-        </p>
+        <div class="section-head">
+          <h3>Segurança na internet</h3>
+          <p>Antes de clicar, sempre observe os sinais. Pequenos detalhes ajudam a evitar golpes.</p>
+        </div>
 
-        <div class="steps">
-          <div class="step">
-            <div class="step-number">1</div>
-            <div>
-              <h3>Levantamento das dificuldades</h3>
-              <p>Mapeamento das principais dúvidas do público leigo em relação ao uso de internet, senhas, e-mails e aplicativos.</p>
+        <div class="grid-2">
+          <div class="card">
+            <div class="icon-box">🔒</div>
+            <h4>O cadeado do navegador</h4>
+            <p>
+              Ao entrar em um site, procure o cadeado ao lado do endereço. Ele indica que a conexão com aquele site
+              está mais protegida. Isso não resolve tudo sozinho, mas já é um sinal importante.
+            </p>
+
+            <div class="fake-browser hover-guide">
+              <div class="browser-top">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+              </div>
+              <div class="address-bar"><span class="lock">🔒</span>https://www.exemplo-seguro.com.br</div>
+              <div class="browser-body">
+                <strong>Observe:</strong> quando há o cadeado e o endereço começa com <strong>https</strong>, o site demonstra uma camada extra de proteção.
+              </div>
+            </div>
+
+            <button class="speak-btn hover-guide" onclick="falarTexto('textoCadeado')">▶ Ouvir explicação</button>
+            <div id="textoCadeado" class="small" style="margin-top:10px;">
+              O cadeado ao lado do endereço indica uma conexão mais protegida. Também observe se o site começa com HTTPS.
             </div>
           </div>
 
-          <div class="step">
-            <div class="step-number">2</div>
-            <div>
-              <h3>Definição dos conteúdos</h3>
-              <p>Seleção de temas prioritários, com linguagem simples, foco prático e organização por módulos de aprendizagem.</p>
+          <div class="card">
+            <div class="icon-box">⚠️</div>
+            <h4>Anatomia de um golpe</h4>
+            <p>
+              Muitos golpes tentam assustar ou apressar a pessoa. Eles usam promessas de prêmio, bloqueio de conta,
+              urgência e links esquisitos.
+            </p>
+
+            <div class="phishing-demo hover-guide" style="margin-top:16px;">
+              <h5>SMS recebido</h5>
+              <p><strong>Banco Alerta:</strong> Sua conta sera cancelada hoje! Clique urgente: <br><strong>http://banco-promocao-segura-premio.xyz</strong></p>
+
+              <div class="flag">Erro de português: “sera” sem acento.</div>
+              <div class="flag">Senso de urgência: “hoje”, “urgente”.</div>
+              <div class="flag">Endereço estranho: link muito diferente do banco real.</div>
+            </div>
+
+            <button class="speak-btn hover-guide" onclick="falarTexto('textoGolpe')">▶ Ouvir explicação</button>
+            <div id="textoGolpe" class="small" style="margin-top:10px;">
+              Golpes costumam usar urgência, erros de escrita e links estranhos. Nunca clique sem verificar.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="servicos">
+      <div class="container">
+        <div class="section-head">
+          <h3>Serviços úteis do dia a dia</h3>
+          <p>Hoje muitos serviços importantes funcionam pela internet. Aprender a acessá-los traz autonomia.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card service-steps">
+            <div class="icon-box">🏛️</div>
+            <h4>Como acessar o Gov.br</h4>
+            <p>O Gov.br reúne vários serviços públicos. Um caminho simples para começar é:</p>
+            <ol>
+              <li>Abrir o navegador do celular ou computador.</li>
+              <li>Digitar o endereço oficial do serviço.</li>
+              <li>Confirmar se existe o cadeado no navegador.</li>
+              <li>Informar CPF e senha, com atenção.</li>
+              <li>Nunca compartilhar código recebido por SMS.</li>
+            </ol>
+            <button class="speak-btn hover-guide" onclick="falarTexto('textoGov')">▶ Ouvir tutorial</button>
+            <div id="textoGov" class="small" style="margin-top:10px;">
+              Para acessar o Gov.br, abra o navegador, confirme o endereço oficial e o cadeado, depois entre com seus dados.
             </div>
           </div>
 
-          <div class="step">
-            <div class="step-number">3</div>
-            <div>
-              <h3>Modelagem da interface</h3>
-              <p>Planejamento de um layout limpo, responsivo, intuitivo e acessível, adequado para celulares e computadores.</p>
+          <div class="card service-steps">
+            <div class="icon-box">🩺</div>
+            <h4>Como acessar serviços de saúde digital</h4>
+            <p>Aplicativos e portais de saúde ajudam a consultar informações importantes. O processo básico é:</p>
+            <ol>
+              <li>Baixar o aplicativo oficial ou acessar o portal oficial.</li>
+              <li>Verificar nome, ícone e desenvolvedor do aplicativo.</li>
+              <li>Entrar com seus dados apenas em ambiente confiável.</li>
+              <li>Desconfiar de links recebidos por mensagem de desconhecidos.</li>
+              <li>Guardar sua senha em local seguro.</li>
+            </ol>
+            <button class="speak-btn hover-guide" onclick="falarTexto('textoSaude')">▶ Ouvir tutorial</button>
+            <div id="textoSaude" class="small" style="margin-top:10px;">
+              Use sempre aplicativos e sites oficiais. Verifique o nome correto do serviço antes de informar seus dados.
             </div>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <div class="step">
-            <div class="step-number">4</div>
-            <div>
-              <h3>Desenvolvimento da aplicação</h3>
-              <p>Construção do site com HTML, CSS e JavaScript, incluindo recursos de acessibilidade e quiz interativo.</p>
+    <section id="praticar">
+      <div class="container">
+        <div class="section-head">
+          <h3>Aprender fazendo</h3>
+          <p>Praticar ajuda a entender melhor. Teste situações parecidas com as que aparecem no mundo real.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card simulator">
+            <h4 style="margin-top:0;">Simulador de aviso suspeito</h4>
+            <p>Imagine que apareceu esta mensagem na tela. O que fazer?</p>
+
+            <div class="fake-popup hover-guide">
+              <h4>🎁 Parabéns! Você ganhou um prêmio!</h4>
+              <p>Clique agora para receber seu benefício antes que ele expire em 5 minutos.</p>
+
+              <div class="popup-actions">
+                <button class="btn btn-danger hover-guide" onclick="simularGolpe('aceitar')">Aceitar</button>
+                <button class="btn btn-primary hover-guide" onclick="simularGolpe('fechar')">Fechar</button>
+              </div>
             </div>
+
+            <div id="simuladorResultado" class="feedback-box"></div>
           </div>
 
-          <div class="step">
-            <div class="step-number">5</div>
-            <div>
-              <h3>Teste e validação</h3>
-              <p>Verificação da navegação, legibilidade, responsividade e funcionamento dos recursos interativos.</p>
-            </div>
-          </div>
+          <div class="card password-tool">
+            <h4 style="margin-top:0;">Termômetro de senha</h4>
+            <p>Digite uma senha de exemplo e veja a força dela. A ideia é aprender como melhorar.</p>
 
-          <div class="step">
-            <div class="step-number">6</div>
-            <div>
-              <h3>Apresentação e avaliação</h3>
-              <p>Disponibilização do sistema para demonstração prática e análise dos resultados esperados na inclusão digital.</p>
+            <input type="text" id="senhaInput" placeholder="Digite uma senha de exemplo" oninput="avaliarSenha()" />
+            <div class="meter">
+              <div class="meter-bar" id="meterBar"></div>
+            </div>
+            <div class="meter-text" id="meterText">Digite uma senha para analisar.</div>
+
+            <div class="safe-box" style="margin-top:16px;">
+              Pense na senha como uma chave: quanto mais “dentes” diferentes ela tiver, mais difícil será copiar.
             </div>
           </div>
         </div>
 
-        <div class="diagram" style="margin-top: 28px;">
-          <div class="diagram-box">
-            <h3 style="margin-top:0;">Diagrama da metodologia</h3>
-            <div class="flow" aria-label="Fluxo da metodologia do projeto">
-              <div class="flow-item">Levantamento das dificuldades</div>
-              <div class="flow-arrow">→</div>
-              <div class="flow-item">Definição dos conteúdos</div>
-              <div class="flow-arrow">→</div>
-              <div class="flow-item">Modelagem da interface</div>
-              <div class="flow-arrow">→</div>
-              <div class="flow-item">Desenvolvimento da aplicação</div>
-              <div class="flow-arrow">→</div>
-              <div class="flow-item">Teste e validação</div>
-              <div class="flow-arrow">→</div>
-              <div class="flow-item">Apresentação e avaliação</div>
+        <div class="card" style="margin-top:20px;">
+          <h4>Jogo das diferenças: qual tela é suspeita?</h4>
+          <p>Compare as duas telas abaixo. Uma parece mais confiável. A outra tem sinais de possível fraude.</p>
+
+          <div class="compare-grid">
+            <div class="login-shot hover-guide">
+              <h5>Tela A</h5>
+              <p><strong>Banco Seguro</strong></p>
+              <p>🔒 https://www.bancoseguro.com.br</p>
+              <p>Campo de login organizado, sem erros de escrita e com visual consistente.</p>
+            </div>
+
+            <div class="login-shot fake-bad hover-guide">
+              <h5>Tela B</h5>
+              <p><strong>B4NCO SEGURU</strong></p>
+              <p>http://premio-login-banco.xyz</p>
+              <p>Erro de nome, endereço estranho, sem cadeado e aparência confusa.</p>
             </div>
           </div>
+
+          <div class="spot-list">
+            <label><input type="checkbox" class="spot" value="1" /> O endereço da tela B parece estranho.</label>
+            <label><input type="checkbox" class="spot" value="1" /> A tela B não mostra um site confiável.</label>
+            <label><input type="checkbox" class="spot" value="1" /> O nome da tela B parece errado.</label>
+            <label><input type="checkbox" class="spot" value="0" /> A tela B parece melhor porque promete algo diferente.</label>
+          </div>
+
+          <button class="btn btn-primary hover-guide" style="margin-top:16px;" onclick="verificarDiferencas()">Ver resposta</button>
+          <div id="diferencasResultado" class="feedback-box"></div>
         </div>
       </div>
     </section>
 
     <section id="quiz">
       <div class="container">
-        <h2 class="section-title">Quiz de aprendizagem</h2>
-        <p class="section-subtitle">
-          Este quiz foi criado para verificar o entendimento dos conteúdos apresentados na plataforma.
-        </p>
+        <div class="section-head">
+          <h3>Quiz de revisão</h3>
+          <p>Responda às perguntas para reforçar o aprendizado. O objetivo é praticar, não acertar tudo de primeira.</p>
+        </div>
 
-        <div class="quiz-box">
+        <div class="card quiz-box">
           <form id="quizForm">
             <div class="question">
-              <h4>1. Qual é uma boa prática para criar uma senha segura?</h4>
-              <label><input type="radio" name="q1" value="0" /> Usar apenas o nome da pessoa</label>
-              <label><input type="radio" name="q1" value="1" /> Misturar letras, números e caracteres</label>
-              <label><input type="radio" name="q1" value="0" /> Repetir a mesma senha em todos os sites</label>
+              <h5>1. O que é um link?</h5>
+              <label><input type="radio" name="q1" value="1"> Uma porta para outra página ou conteúdo.</label>
+              <label><input type="radio" name="q1" value="0"> Um tipo de vírus do celular.</label>
+              <label><input type="radio" name="q1" value="0"> Uma bateria do computador.</label>
             </div>
 
             <div class="question">
-              <h4>2. O que deve ser feito ao receber uma mensagem com link suspeito?</h4>
-              <label><input type="radio" name="q2" value="0" /> Clicar imediatamente</label>
-              <label><input type="radio" name="q2" value="1" /> Verificar a origem antes de acessar</label>
-              <label><input type="radio" name="q2" value="0" /> Compartilhar com outras pessoas</label>
+              <h5>2. O que significa “nuvem” na tecnologia?</h5>
+              <label><input type="radio" name="q2" value="0"> Um problema de internet por causa da chuva.</label>
+              <label><input type="radio" name="q2" value="1"> Um espaço na internet para guardar arquivos.</label>
+              <label><input type="radio" name="q2" value="0"> Um aplicativo de previsão do tempo.</label>
             </div>
 
             <div class="question">
-              <h4>3. Qual é uma atitude segura ao usar a internet?</h4>
-              <label><input type="radio" name="q3" value="1" /> Proteger dados pessoais e desconfiar de golpes</label>
-              <label><input type="radio" name="q3" value="0" /> Informar senhas para qualquer atendimento</label>
-              <label><input type="radio" name="q3" value="0" /> Ignorar atualizações de segurança</label>
+              <h5>3. O cadeado no navegador ajuda a mostrar:</h5>
+              <label><input type="radio" name="q3" value="1"> Que a conexão do site está mais protegida.</label>
+              <label><input type="radio" name="q3" value="0"> Que o site dá prêmios.</label>
+              <label><input type="radio" name="q3" value="0"> Que o acesso é gratuito.</label>
             </div>
 
-            <button type="button" class="btn btn-primary" onclick="corrigirQuiz()">Ver resultado</button>
+            <div class="question">
+              <h5>4. Qual é um sinal comum de golpe?</h5>
+              <label><input type="radio" name="q4" value="0"> Texto claro e sem urgência.</label>
+              <label><input type="radio" name="q4" value="1"> Mensagem apressando você a clicar.</label>
+              <label><input type="radio" name="q4" value="0"> Endereço oficial bem conhecido.</label>
+            </div>
+
+            <div class="question">
+              <h5>5. Uma senha mais forte costuma ter:</h5>
+              <label><input type="radio" name="q5" value="0"> Apenas números simples.</label>
+              <label><input type="radio" name="q5" value="0"> Apenas o nome da pessoa.</label>
+              <label><input type="radio" name="q5" value="1"> Letras, números e símbolos.</label>
+            </div>
+
+            <div class="question">
+              <h5>6. Ao receber um link estranho por mensagem, o melhor é:</h5>
+              <label><input type="radio" name="q6" value="1"> Verificar antes de clicar.</label>
+              <label><input type="radio" name="q6" value="0"> Clicar rápido para não perder a chance.</label>
+              <label><input type="radio" name="q6" value="0"> Informar sua senha primeiro.</label>
+            </div>
+
+            <div class="question">
+              <h5>7. Para acessar serviços do cidadão com segurança, o ideal é:</h5>
+              <label><input type="radio" name="q7" value="1"> Usar aplicativos e sites oficiais.</label>
+              <label><input type="radio" name="q7" value="0"> Entrar por qualquer link recebido.</label>
+              <label><input type="radio" name="q7" value="0"> Ignorar o endereço do site.</label>
+            </div>
+
+            <div class="question">
+              <h5>8. O que fazer se uma mensagem prometer prêmio e pedir clique urgente?</h5>
+              <label><input type="radio" name="q8" value="0"> Aceitar imediatamente.</label>
+              <label><input type="radio" name="q8" value="1"> Desconfiar e verificar a origem.</label>
+              <label><input type="radio" name="q8" value="0"> Compartilhar com amigos antes de conferir.</label>
+            </div>
+
+            <button type="button" class="btn btn-primary hover-guide" onclick="corrigirQuiz()">Ver meu resultado</button>
           </form>
 
-          <div id="quizResult" class="result"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="tecnologias">
-      <div class="container">
-        <h2 class="section-title">Tecnologias utilizadas</h2>
-        <p class="section-subtitle">
-          A aplicação foi desenvolvida com tecnologias web amplamente utilizadas, de fácil manutenção e ótima compatibilidade.
-        </p>
-
-        <div class="grid-2">
-          <article class="card">
-            <h3>Estrutura técnica</h3>
-            <p>
-              O sistema foi construído com HTML5 para marcação semântica, CSS3 para estilização responsiva
-              e JavaScript para interatividade, acessibilidade e correção do quiz.
-            </p>
-            <div class="tech-list">
-              <span class="chip">HTML5</span>
-              <span class="chip">CSS3</span>
-              <span class="chip">JavaScript</span>
-              <span class="chip">Responsividade</span>
-              <span class="chip">Acessibilidade</span>
-            </div>
-          </article>
-
-          <article class="card">
-            <h3>Publicação e demonstração</h3>
-            <p>
-              O site pode ser publicado gratuitamente em plataformas como GitHub Pages ou Netlify,
-              gerando um link público para demonstração e entrega da atividade extensionista.
-            </p>
-            <div class="tech-list">
-              <span class="chip">GitHub Pages</span>
-              <span class="chip">Netlify</span>
-              <span class="chip">Link público</span>
-              <span class="chip">Fácil apresentação</span>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="ods">
-      <div class="container">
-        <h2 class="section-title">Objetivos de Desenvolvimento Sustentável</h2>
-        <p class="section-subtitle">
-          O projeto se relaciona diretamente com três ODS da ONU, reforçando seu valor educacional e social.
-        </p>
-
-        <div class="ods-grid">
-          <article class="ods-card ods-4">
-            <h3>ODS 4</h3>
-            <h4>Educação de qualidade</h4>
-            <p>Promove acesso a conteúdos educativos sobre tecnologia com linguagem acessível e foco em autonomia digital.</p>
-          </article>
-
-          <article class="ods-card ods-9">
-            <h3>ODS 9</h3>
-            <h4>Indústria, inovação e infraestrutura</h4>
-            <p>Utiliza uma solução tecnológica prática para ampliar a inclusão e a participação digital.</p>
-          </article>
-
-          <article class="ods-card ods-10">
-            <h3>ODS 10</h3>
-            <h4>Redução das desigualdades</h4>
-            <p>Busca diminuir barreiras de acesso à tecnologia enfrentadas por pessoas com baixa alfabetização digital.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="codigo">
-      <div class="container">
-        <h2 class="section-title">Exemplo de lógica JavaScript aplicada</h2>
-        <p class="section-subtitle">
-          Abaixo está um trecho do script usado para calcular o resultado do quiz, demonstrando a parte prática do projeto em código.
-        </p>
-
-        <div class="code-box">
-          <button class="copy-btn" onclick="copiarCodigo()">Copiar</button>
-<pre id="sampleCode">function corrigirQuiz() {
-  const respostas = ['q1', 'q2', 'q3'];
-  let pontuacao = 0;
-
-  respostas.forEach((questao) => {
-    const selecionada = document.querySelector(`input[name="${questao}"]:checked`);
-    if (selecionada) {
-      pontuacao += Number(selecionada.value);
-    }
-  });
-
-  const resultado = document.getElementById('quizResult');
-  resultado.classList.add('show');
-
-  if (pontuacao === 3) {
-    resultado.className = 'result show success';
-    resultado.innerHTML = 'Excelente! Você acertou todas as questões.';
-  } else {
-    resultado.className = 'result show warning';
-    resultado.innerHTML = `Você acertou ${pontuacao} de 3 questão(ões).`;
-  }
-}</pre>
+          <div id="quizResultado" class="result-box"></div>
         </div>
       </div>
     </section>
@@ -1001,76 +1094,170 @@
 
   <footer class="footer">
     <div class="container">
-      <p><strong>Conecta Fácil</strong> — Plataforma de Inclusão Digital</p>
-      <p>Projeto acadêmico extensionista na área de Tecnologia da Informação.</p>
+      <p><strong>Conecta Fácil</strong> — Plataforma educativa para inclusão digital.</p>
+      <p>Feito para ensinar com calma, clareza e segurança.</p>
     </div>
   </footer>
 
   <script>
-    let escalaFonte = 1;
+    let fontScale = 1;
 
-    function aumentarFonte() {
-      if (escalaFonte < 1.35) {
-        escalaFonte += 0.05;
-        document.documentElement.style.setProperty('--font-scale', escalaFonte.toFixed(2));
+    function aumentarFonte(){
+      if(fontScale < 1.35){
+        fontScale += 0.05;
+        document.documentElement.style.setProperty('--font-scale', fontScale.toFixed(2));
       }
     }
 
-    function diminuirFonte() {
-      if (escalaFonte > 0.9) {
-        escalaFonte -= 0.05;
-        document.documentElement.style.setProperty('--font-scale', escalaFonte.toFixed(2));
+    function diminuirFonte(){
+      if(fontScale > 0.90){
+        fontScale -= 0.05;
+        document.documentElement.style.setProperty('--font-scale', fontScale.toFixed(2));
       }
     }
 
-    function alternarContraste() {
+    function alternarContraste(){
       document.body.classList.toggle('high-contrast');
     }
 
-    function corrigirQuiz() {
-      const respostas = ['q1', 'q2', 'q3'];
-      let pontuacao = 0;
-      let respondidas = 0;
-
-      respostas.forEach((questao) => {
-        const selecionada = document.querySelector(`input[name="${questao}"]:checked`);
-        if (selecionada) {
-          pontuacao += Number(selecionada.value);
-          respondidas++;
-        }
-      });
-
-      const resultado = document.getElementById('quizResult');
-      resultado.classList.add('show');
-
-      if (respondidas < respostas.length) {
-        resultado.className = 'result show warning';
-        resultado.innerHTML = 'Por favor, responda todas as questões antes de visualizar o resultado.';
+    function falarTexto(id){
+      if(!('speechSynthesis' in window)){
+        alert('Seu navegador não suporta leitura de texto.');
         return;
       }
+      const texto = document.getElementById(id).innerText;
+      const fala = new SpeechSynthesisUtterance(texto);
+      fala.lang = 'pt-BR';
+      fala.rate = 0.95;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(fala);
+    }
 
-      if (pontuacao === 3) {
-        resultado.className = 'result show success';
-        resultado.innerHTML = 'Excelente! Você acertou todas as questões e demonstrou boa compreensão dos conteúdos.';
-      } else if (pontuacao === 2) {
-        resultado.className = 'result show success';
-        resultado.innerHTML = 'Muito bom! Você acertou 2 de 3 questões. Continue praticando para reforçar o aprendizado.';
+    function falarPagina(){
+      if(!('speechSynthesis' in window)){
+        alert('Seu navegador não suporta leitura de texto.');
+        return;
+      }
+      const texto = "Bem-vindo ao Conecta Fácil. Aqui você aprende tecnologia com calma, segurança e linguagem simples.";
+      const fala = new SpeechSynthesisUtterance(texto);
+      fala.lang = 'pt-BR';
+      fala.rate = 0.95;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(fala);
+    }
+
+    function simularGolpe(acao){
+      const box = document.getElementById('simuladorResultado');
+      box.classList.add('show');
+
+      if(acao === 'aceitar'){
+        box.className = 'feedback-box show feedback-risk';
+        box.innerHTML = 'Atenção: essa mensagem usa urgência e promessa de prêmio para induzir o clique. Esse é um comportamento típico de golpe.';
       } else {
-        resultado.className = 'result show warning';
-        resultado.innerHTML = `Você acertou ${pontuacao} de 3 questão(ões). Revise os módulos e tente novamente.`;
+        box.className = 'feedback-box show feedback-safe';
+        box.innerHTML = 'Muito bem: fechar e desconfiar de mensagens assim é uma atitude mais segura.';
       }
     }
 
-    function copiarCodigo() {
-      const texto = document.getElementById('sampleCode').innerText;
-      navigator.clipboard.writeText(texto).then(() => {
-        const botao = document.querySelector('.copy-btn');
-        const textoOriginal = botao.textContent;
-        botao.textContent = 'Copiado!';
-        setTimeout(() => {
-          botao.textContent = textoOriginal;
-        }, 1500);
+    function avaliarSenha(){
+      const senha = document.getElementById('senhaInput').value;
+      const bar = document.getElementById('meterBar');
+      const text = document.getElementById('meterText');
+
+      let score = 0;
+      let dicas = [];
+
+      if(senha.length >= 8) score++;
+      else dicas.push('use pelo menos 8 caracteres');
+
+      if(/[a-z]/.test(senha)) score++;
+      else dicas.push('adicione letra minúscula');
+
+      if(/[A-Z]/.test(senha)) score++;
+      else dicas.push('adicione letra maiúscula');
+
+      if(/[0-9]/.test(senha)) score++;
+      else dicas.push('adicione número');
+
+      if(/[^A-Za-z0-9]/.test(senha)) score++;
+      else dicas.push('adicione símbolo');
+
+      let percent = (score / 5) * 100;
+      bar.style.width = percent + '%';
+
+      if(senha.length === 0){
+        bar.style.width = '0%';
+        bar.style.background = '#cbd5e1';
+        text.innerHTML = 'Digite uma senha para analisar.';
+        return;
+      }
+
+      if(score <= 2){
+        bar.style.background = '#dc2626';
+        text.innerHTML = 'Senha fraca. Dica: ' + dicas.join(', ') + '.';
+      } else if(score <= 4){
+        bar.style.background = '#f59e0b';
+        text.innerHTML = 'Senha média. Para melhorar: ' + dicas.join(', ') + '.';
+      } else {
+        bar.style.background = '#16a34a';
+        text.innerHTML = 'Senha forte. Boa combinação de elementos.';
+      }
+    }
+
+    function verificarDiferencas(){
+      const checks = document.querySelectorAll('.spot');
+      let totalMarcadosCorretos = 0;
+      let marcouErrado = false;
+
+      checks.forEach(item => {
+        if(item.checked && item.value === '1') totalMarcadosCorretos++;
+        if(item.checked && item.value === '0') marcouErrado = true;
       });
+
+      const box = document.getElementById('diferencasResultado');
+      box.classList.add('show');
+
+      if(totalMarcadosCorretos === 3 && !marcouErrado){
+        box.className = 'feedback-box show feedback-safe';
+        box.innerHTML = 'Excelente! Você identificou corretamente os sinais de risco da tela suspeita.';
+      } else {
+        box.className = 'feedback-box show feedback-risk';
+        box.innerHTML = 'Quase lá. Os principais sinais eram: endereço estranho, ausência de aparência confiável e nome escrito de forma suspeita.';
+      }
+    }
+
+    function corrigirQuiz(){
+      const perguntas = ['q1','q2','q3','q4','q5','q6','q7','q8'];
+      let pontos = 0;
+      let respondidas = 0;
+
+      perguntas.forEach(q => {
+        const escolhida = document.querySelector(`input[name="${q}"]:checked`);
+        if(escolhida){
+          respondidas++;
+          pontos += Number(escolhida.value);
+        }
+      });
+
+      const box = document.getElementById('quizResultado');
+      box.classList.add('show');
+
+      if(respondidas < perguntas.length){
+        box.className = 'result-box show result-mid';
+        box.innerHTML = 'Responda todas as perguntas para ver o resultado completo.';
+        return;
+      }
+
+      if(pontos >= 7){
+        box.className = 'result-box show result-good';
+        box.innerHTML = `Parabéns! Você acertou ${pontos} de 8. Seu entendimento sobre uso seguro da tecnologia está muito bom.`;
+      } else if(pontos >= 4){
+        box.className = 'result-box show result-mid';
+        box.innerHTML = `Você acertou ${pontos} de 8. Está indo bem, mas ainda vale revisar algumas partes.`;
+      } else {
+        box.className = 'result-box show result-bad';
+        box.innerHTML = `Você acertou ${pontos} de 8. Revise os conteúdos e pratique novamente. O importante é aprender aos poucos.`;
+      }
     }
   </script>
 </body>
