@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conecta Fácil | Inclusão Digital</title>
+  <meta name="description" content="Plataforma educativa de inclusão digital para pessoas com pouca familiaridade com tecnologia." />
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --surface-2: #eef3f9;
+      --text: #1c2430;
+      --muted: #5f6b7a;
+      --primary: #0b63ce;
+      --primary-dark: #084b9b;
+      --secondary: #16a34a;
+      --accent: #f59e0b;
+      --border: #dbe3ee;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+      --maxw: 1180px;
+      --header-h: 78px;
+      --font-scale: 1;
+    }
+
+    body.high-contrast {
+      --bg: #000000;
+      --surface: #121212;
+      --surface-2: #1b1b1b;
+      --text: #ffffff;
+      --muted: #d1d5db;
+      --primary: #ffd400;
+      --primary-dark: #ffbf00;
+      --secondary: #00d26a;
+      --accent: #00c2ff;
+      --border: #3b3b3b;
+      --shadow: none;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: calc(16px * var(--font-scale));
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--maxw));
+      margin: 0 auto;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: 12px;
+      top: -60px;
+      background: var(--primary);
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 10px;
+      z-index: 9999;
+      transition: top 0.2s;
+      font-weight: bold;
+    }
+
+    .skip-link:focus {
+      top: 12px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      height: var(--header-h);
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    body.high-contrast header {
+      background: rgba(0,0,0,0.95);
+    }
+
+    .nav {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--primary);
+    }
+
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      font-size: 1.2rem;
+      box-shadow: var(--shadow);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 10px;
+      padding: 0;
+      margin: 0;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      padding: 10px 14px;
+      border-radius: 12px;
+      color: var(--muted);
+      font-weight: 700;
+      transition: 0.2s;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      background: var(--surface-2);
+      color: var(--primary);
+      outline: none;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .tool-btn,
+    .btn {
+      border: none;
+      cursor: pointer;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: 0.2s;
+    }
+
+    .tool-btn {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      min-width: 48px;
+      box-shadow: var(--shadow);
+    }
+
+    .tool-btn:hover,
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      padding: 68px 0 42px;
+      background:
+        radial-gradient(circle at top left, rgba(11,99,206,0.14), transparent 25%),
+        radial-gradient(circle at top right, rgba(22,163,74,0.12), transparent 24%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: var(--primary);
+      font-weight: 700;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.1;
+      margin: 0 0 14px;
+    }
+
+    .hero p {
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 760px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .btn {
+      padding: 14px 18px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .hero-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .hero-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .hero-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .hero-list li:last-child {
+      border-bottom: 0;
+    }
+
+    .check {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(22,163,74,0.12);
+      color: var(--secondary);
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    section {
+      padding: 50px 0;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.3rem);
+      margin: 0 0 10px;
+    }
+
+    .section-subtitle {
+      margin: 0 0 28px;
+      color: var(--muted);
+      max-width: 850px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      height: 100%;
+    }
+
+    .card h3, .card h4 {
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, rgba(11,99,206,0.15), rgba(22,163,74,0.18));
+    }
+
+    .module-card ul {
+      padding-left: 18px;
+      margin-bottom: 0;
+    }
+
+    .steps {
+      display: grid;
+      gap: 14px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 16px;
+      border-radius: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .step-number {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: var(--primary);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+
+    .diagram {
+      overflow-x: auto;
+    }
+
+    .diagram-box {
+      min-width: 880px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: nowrap;
+    }
+
+    .flow-item {
+      min-width: 150px;
+      text-align: center;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 14px;
+      font-weight: 700;
+    }
+
+    .flow-arrow {
+      font-size: 1.8rem;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .quiz-box {
+      background: var(--surface);
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .question {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .question:last-child {
+      border-bottom: 0;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .question h4 {
+      margin: 0 0 12px;
+    }
+
+    .question label {
+      display: block;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: 0.2s;
+      background: var(--surface);
+    }
+
+    .question label:hover {
+      background: var(--surface-2);
+    }
+
+    .result {
+      margin-top: 22px;
+      padding: 16px;
+      border-radius: 14px;
+      font-weight: 700;
+      display: none;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .result.success {
+      background: rgba(22,163,74,0.12);
+      color: #166534;
+      border: 1px solid rgba(22,163,74,0.25);
+    }
+
+    .result.warning {
+      background: rgba(245,158,11,0.12);
+      color: #92400e;
+      border: 1px solid rgba(245,158,11,0.28);
+    }
+
+    body.high-contrast .result.success,
+    body.high-contrast .result.warning {
+      color: var(--text);
+    }
+
+    .tech-list {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      font-weight: 700;
+    }
+
+    .code-box {
+      position: relative;
+      background: #0f172a;
+      color: #e2e8f0;
+      border-radius: 18px;
+      padding: 20px;
+      overflow-x: auto;
+      font-family: "Courier New", monospace;
+      font-size: 0.94rem;
+      line-height: 1.55;
+      box-shadow: var(--shadow);
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 0;
+      cursor: pointer;
+      font-weight: 700;
+      background: #1d4ed8;
+      color: white;
+    }
+
+    .ods-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .ods-card {
+      border-radius: 18px;
+      padding: 20px;
+      color: #fff;
+      min-height: 170px;
+      box-shadow: var(--shadow);
+    }
+
+    .ods-4 { background: #c5192d; }
+    .ods-9 { background: #fd6925; }
+    .ods-10 { background: #dd1367; }
+
+    .footer {
+      padding: 28px 0 40px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .highlight {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .grid-3,
+      .grid-2,
+      .ods-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        height: auto;
+        padding: 12px 0;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      header {
+        height: auto;
+      }
+
+      nav ul {
+        gap: 6px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .hero {
+        padding-top: 38px;
+      }
+
+      .toolbar {
+        width: 100%;
+      }
+
+      .tool-btn {
+        flex: 1;
+      }
+
+      .step {
+        grid-template-columns: 1fr;
+      }
+
+      .step-number {
+        width: 48px;
+        height: 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-logo">CF</div>
+        <div>
+          <div>Conecta Fácil</div>
+          <small class="muted">Inclusão Digital com linguagem simples</small>
+        </div>
+      </div>
+
+      <nav aria-label="Menu principal">
+        <ul>
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#modulos">Módulos</a></li>
+          <li><a href="#metodologia">Metodologia</a></li>
+          <li><a href="#quiz">Quiz</a></li>
+          <li><a href="#tecnologias">Tecnologias</a></li>
+          <li><a href="#ods">ODS</a></li>
+        </ul>
+      </nav>
+
+      <div class="toolbar" aria-label="Ferramentas de acessibilidade">
+        <button class="tool-btn" onclick="diminuirFonte()" aria-label="Diminuir tamanho da fonte">A-</button>
+        <button class="tool-btn" onclick="aumentarFonte()" aria-label="Aumentar tamanho da fonte">A+</button>
+        <button class="tool-btn" onclick="alternarContraste()" aria-label="Alternar modo de alto contraste">Contraste</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div>
+          <div class="badge">💻 Projeto de TI com impacto social</div>
+          <h1>Plataforma web para <span class="highlight">alfabetização digital</span> de pessoas leigas em tecnologia</h1>
+          <p>
+            O Conecta Fácil é uma plataforma educativa criada para orientar pessoas com pouca familiaridade
+            com tecnologia no uso básico da internet, segurança digital, e-mail, aplicativos e boas práticas online.
+            O objetivo é promover inclusão digital de forma prática, acessível e intuitiva.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#modulos">Explorar módulos</a>
+            <a class="btn btn-secondary" href="#quiz">Fazer quiz</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <h3>O que esta plataforma oferece?</h3>
+          <ul class="hero-list">
+            <li>
+              <span class="check">✓</span>
+              <div><strong>Conteúdo simplificado</strong><br>Explicações objetivas e em linguagem acessível.</div>
+            </li>
+            <li>
+              <span class="check">✓</span>
+              <div><strong>Acessibilidade</strong><br>Opções de contraste e ajuste de fonte.</div>
+            </li>
+            <li>
+              <span class="check">✓</span>
+              <div><strong>Interatividade</strong><br>Quiz para reforçar o aprendizado.</div>
+            </li>
+            <li>
+              <span class="check">✓</span>
+              <div><strong>Responsividade</strong><br>Funciona em celular, tablet e computador.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre">
+      <div class="container">
+        <h2 class="section-title">Sobre o projeto</h2>
+        <p class="section-subtitle">
+          Esta solução foi desenvolvida para atender um grupo de pessoas com baixa alfabetização digital,
+          especialmente adultos e idosos que enfrentam dificuldades no uso cotidiano da tecnologia.
+          A proposta une educação e TI por meio de um site informativo, responsivo e acessível.
+        </p>
+
+        <div class="grid-3">
+          <article class="card">
+            <div class="icon">🎯</div>
+            <h3>Objetivo principal</h3>
+            <p>
+              Ensinar noções básicas de tecnologia, navegação segura e uso de ferramentas digitais
+              por meio de uma plataforma web intuitiva.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">👥</div>
+            <h3>Público-alvo</h3>
+            <p>
+              Pessoas leigas em tecnologia, com pouca experiência em internet, aplicativos,
+              criação de senhas e prevenção contra golpes digitais.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">🌐</div>
+            <h3>Aplicação prática</h3>
+            <p>
+              O sistema pode ser apresentado em oficinas, grupos de capacitação, turmas de extensão
+              ou atendimentos orientados de inclusão digital.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="modulos">
+      <div class="container">
+        <h2 class="section-title">Módulos educativos</h2>
+        <p class="section-subtitle">
+          A plataforma foi organizada em módulos temáticos para facilitar o entendimento e a navegação do usuário.
+        </p>
+
+        <div class="grid-2">
+          <article class="card module-card">
+            <div class="icon">🌍</div>
+            <h3>1. Noções básicas de internet</h3>
+            <ul>
+              <li>O que é internet e para que ela serve</li>
+              <li>Como acessar sites com segurança</li>
+              <li>Como pesquisar informações úteis</li>
+              <li>Cuidados ao clicar em links desconhecidos</li>
+            </ul>
+          </article>
+
+          <article class="card module-card">
+            <div class="icon">🔐</div>
+            <h3>2. Senhas seguras</h3>
+            <ul>
+              <li>Como criar senhas fortes</li>
+              <li>Evitar datas de nascimento e sequências fáceis</li>
+              <li>Importância de não compartilhar senhas</li>
+              <li>Uso consciente de autenticação em duas etapas</li>
+            </ul>
+          </article>
+
+          <article class="card module-card">
+            <div class="icon">📧</div>
+            <h3>3. Uso de e-mail e aplicativos</h3>
+            <ul>
+              <li>Como enviar e receber mensagens</li>
+              <li>Reconhecer anexos e mensagens confiáveis</li>
+              <li>Noções de aplicativos de comunicação</li>
+              <li>Organização básica da rotina digital</li>
+            </ul>
+          </article>
+
+          <article class="card module-card">
+            <div class="icon">🛡️</div>
+            <h3>4. Golpes digitais</h3>
+            <ul>
+              <li>Como identificar mensagens falsas</li>
+              <li>Reconhecimento de tentativas de fraude</li>
+              <li>Verificação de links e contatos suspeitos</li>
+              <li>Cuidados com dados pessoais na internet</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="metodologia">
+      <div class="container">
+        <h2 class="section-title">Metodologia</h2>
+        <p class="section-subtitle">
+          O projeto foi estruturado em etapas sequenciais, desde a identificação das dificuldades do público-alvo
+          até a construção da plataforma e avaliação dos resultados.
+        </p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div>
+              <h3>Levantamento das dificuldades</h3>
+              <p>Mapeamento das principais dúvidas do público leigo em relação ao uso de internet, senhas, e-mails e aplicativos.</p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <div>
+              <h3>Definição dos conteúdos</h3>
+              <p>Seleção de temas prioritários, com linguagem simples, foco prático e organização por módulos de aprendizagem.</p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <div>
+              <h3>Modelagem da interface</h3>
+              <p>Planejamento de um layout limpo, responsivo, intuitivo e acessível, adequado para celulares e computadores.</p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">4</div>
+            <div>
+              <h3>Desenvolvimento da aplicação</h3>
+              <p>Construção do site com HTML, CSS e JavaScript, incluindo recursos de acessibilidade e quiz interativo.</p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">5</div>
+            <div>
+              <h3>Teste e validação</h3>
+              <p>Verificação da navegação, legibilidade, responsividade e funcionamento dos recursos interativos.</p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">6</div>
+            <div>
+              <h3>Apresentação e avaliação</h3>
+              <p>Disponibilização do sistema para demonstração prática e análise dos resultados esperados na inclusão digital.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="diagram" style="margin-top: 28px;">
+          <div class="diagram-box">
+            <h3 style="margin-top:0;">Diagrama da metodologia</h3>
+            <div class="flow" aria-label="Fluxo da metodologia do projeto">
+              <div class="flow-item">Levantamento das dificuldades</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-item">Definição dos conteúdos</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-item">Modelagem da interface</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-item">Desenvolvimento da aplicação</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-item">Teste e validação</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-item">Apresentação e avaliação</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz">
+      <div class="container">
+        <h2 class="section-title">Quiz de aprendizagem</h2>
+        <p class="section-subtitle">
+          Este quiz foi criado para verificar o entendimento dos conteúdos apresentados na plataforma.
+        </p>
+
+        <div class="quiz-box">
+          <form id="quizForm">
+            <div class="question">
+              <h4>1. Qual é uma boa prática para criar uma senha segura?</h4>
+              <label><input type="radio" name="q1" value="0" /> Usar apenas o nome da pessoa</label>
+              <label><input type="radio" name="q1" value="1" /> Misturar letras, números e caracteres</label>
+              <label><input type="radio" name="q1" value="0" /> Repetir a mesma senha em todos os sites</label>
+            </div>
+
+            <div class="question">
+              <h4>2. O que deve ser feito ao receber uma mensagem com link suspeito?</h4>
+              <label><input type="radio" name="q2" value="0" /> Clicar imediatamente</label>
+              <label><input type="radio" name="q2" value="1" /> Verificar a origem antes de acessar</label>
+              <label><input type="radio" name="q2" value="0" /> Compartilhar com outras pessoas</label>
+            </div>
+
+            <div class="question">
+              <h4>3. Qual é uma atitude segura ao usar a internet?</h4>
+              <label><input type="radio" name="q3" value="1" /> Proteger dados pessoais e desconfiar de golpes</label>
+              <label><input type="radio" name="q3" value="0" /> Informar senhas para qualquer atendimento</label>
+              <label><input type="radio" name="q3" value="0" /> Ignorar atualizações de segurança</label>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="corrigirQuiz()">Ver resultado</button>
+          </form>
+
+          <div id="quizResult" class="result"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tecnologias">
+      <div class="container">
+        <h2 class="section-title">Tecnologias utilizadas</h2>
+        <p class="section-subtitle">
+          A aplicação foi desenvolvida com tecnologias web amplamente utilizadas, de fácil manutenção e ótima compatibilidade.
+        </p>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3>Estrutura técnica</h3>
+            <p>
+              O sistema foi construído com HTML5 para marcação semântica, CSS3 para estilização responsiva
+              e JavaScript para interatividade, acessibilidade e correção do quiz.
+            </p>
+            <div class="tech-list">
+              <span class="chip">HTML5</span>
+              <span class="chip">CSS3</span>
+              <span class="chip">JavaScript</span>
+              <span class="chip">Responsividade</span>
+              <span class="chip">Acessibilidade</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3>Publicação e demonstração</h3>
+            <p>
+              O site pode ser publicado gratuitamente em plataformas como GitHub Pages ou Netlify,
+              gerando um link público para demonstração e entrega da atividade extensionista.
+            </p>
+            <div class="tech-list">
+              <span class="chip">GitHub Pages</span>
+              <span class="chip">Netlify</span>
+              <span class="chip">Link público</span>
+              <span class="chip">Fácil apresentação</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="ods">
+      <div class="container">
+        <h2 class="section-title">Objetivos de Desenvolvimento Sustentável</h2>
+        <p class="section-subtitle">
+          O projeto se relaciona diretamente com três ODS da ONU, reforçando seu valor educacional e social.
+        </p>
+
+        <div class="ods-grid">
+          <article class="ods-card ods-4">
+            <h3>ODS 4</h3>
+            <h4>Educação de qualidade</h4>
+            <p>Promove acesso a conteúdos educativos sobre tecnologia com linguagem acessível e foco em autonomia digital.</p>
+          </article>
+
+          <article class="ods-card ods-9">
+            <h3>ODS 9</h3>
+            <h4>Indústria, inovação e infraestrutura</h4>
+            <p>Utiliza uma solução tecnológica prática para ampliar a inclusão e a participação digital.</p>
+          </article>
+
+          <article class="ods-card ods-10">
+            <h3>ODS 10</h3>
+            <h4>Redução das desigualdades</h4>
+            <p>Busca diminuir barreiras de acesso à tecnologia enfrentadas por pessoas com baixa alfabetização digital.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="codigo">
+      <div class="container">
+        <h2 class="section-title">Exemplo de lógica JavaScript aplicada</h2>
+        <p class="section-subtitle">
+          Abaixo está um trecho do script usado para calcular o resultado do quiz, demonstrando a parte prática do projeto em código.
+        </p>
+
+        <div class="code-box">
+          <button class="copy-btn" onclick="copiarCodigo()">Copiar</button>
+<pre id="sampleCode">function corrigirQuiz() {
+  const respostas = ['q1', 'q2', 'q3'];
+  let pontuacao = 0;
+
+  respostas.forEach((questao) => {
+    const selecionada = document.querySelector(`input[name="${questao}"]:checked`);
+    if (selecionada) {
+      pontuacao += Number(selecionada.value);
+    }
+  });
+
+  const resultado = document.getElementById('quizResult');
+  resultado.classList.add('show');
+
+  if (pontuacao === 3) {
+    resultado.className = 'result show success';
+    resultado.innerHTML = 'Excelente! Você acertou todas as questões.';
+  } else {
+    resultado.className = 'result show warning';
+    resultado.innerHTML = `Você acertou ${pontuacao} de 3 questão(ões).`;
+  }
+}</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p><strong>Conecta Fácil</strong> — Plataforma de Inclusão Digital</p>
+      <p>Projeto acadêmico extensionista na área de Tecnologia da Informação.</p>
+    </div>
+  </footer>
+
+  <script>
+    let escalaFonte = 1;
+
+    function aumentarFonte() {
+      if (escalaFonte < 1.35) {
+        escalaFonte += 0.05;
+        document.documentElement.style.setProperty('--font-scale', escalaFonte.toFixed(2));
+      }
+    }
+
+    function diminuirFonte() {
+      if (escalaFonte > 0.9) {
+        escalaFonte -= 0.05;
+        document.documentElement.style.setProperty('--font-scale', escalaFonte.toFixed(2));
+      }
+    }
+
+    function alternarContraste() {
+      document.body.classList.toggle('high-contrast');
+    }
+
+    function corrigirQuiz() {
+      const respostas = ['q1', 'q2', 'q3'];
+      let pontuacao = 0;
+      let respondidas = 0;
+
+      respostas.forEach((questao) => {
+        const selecionada = document.querySelector(`input[name="${questao}"]:checked`);
+        if (selecionada) {
+          pontuacao += Number(selecionada.value);
+          respondidas++;
+        }
+      });
+
+      const resultado = document.getElementById('quizResult');
+      resultado.classList.add('show');
+
+      if (respondidas < respostas.length) {
+        resultado.className = 'result show warning';
+        resultado.innerHTML = 'Por favor, responda todas as questões antes de visualizar o resultado.';
+        return;
+      }
+
+      if (pontuacao === 3) {
+        resultado.className = 'result show success';
+        resultado.innerHTML = 'Excelente! Você acertou todas as questões e demonstrou boa compreensão dos conteúdos.';
+      } else if (pontuacao === 2) {
+        resultado.className = 'result show success';
+        resultado.innerHTML = 'Muito bom! Você acertou 2 de 3 questões. Continue praticando para reforçar o aprendizado.';
+      } else {
+        resultado.className = 'result show warning';
+        resultado.innerHTML = `Você acertou ${pontuacao} de 3 questão(ões). Revise os módulos e tente novamente.`;
+      }
+    }
+
+    function copiarCodigo() {
+      const texto = document.getElementById('sampleCode').innerText;
+      navigator.clipboard.writeText(texto).then(() => {
+        const botao = document.querySelector('.copy-btn');
+        const textoOriginal = botao.textContent;
+        botao.textContent = 'Copiado!';
+        setTimeout(() => {
+          botao.textContent = textoOriginal;
+        }, 1500);
+      });
+    }
+  </script>
+</body>
+</html>
