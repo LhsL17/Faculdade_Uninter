@@ -676,6 +676,36 @@
       color:var(--text);
     }
 
+    .bar-item{
+      display:grid;
+      gap:6px;
+    }
+
+    .bar-label{
+      font-weight:700;
+    }
+
+    .bar-track{
+      width:100%;
+      height:20px;
+      background:var(--card-soft);
+      border:1px solid var(--border);
+      border-radius:999px;
+      overflow:hidden;
+    }
+
+    .bar-fill{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg, var(--warning), var(--danger));
+      transition:.3s ease;
+    }
+
+    .bar-value{
+      font-size:.95rem;
+      color:var(--muted);
+    }
+
     .footer{
       text-align:center;
       color:var(--muted);
@@ -736,6 +766,7 @@
           <li><a href="#servicos">Serviços</a></li>
           <li><a href="#praticar">Praticar</a></li>
           <li><a href="#quiz">Quiz</a></li>
+          <li><a href="#dashboard">Dashboard</a></li>
         </ul>
       </nav>
 
@@ -1090,6 +1121,47 @@
         </div>
       </div>
     </section>
+
+    <section id="dashboard">
+      <div class="container">
+        <div class="section-head">
+          <h3>Dashboard de dúvidas do quiz</h3>
+          <p>
+            Este painel mostra em quais perguntas os usuários mais erram. Assim, é possível identificar
+            os temas que precisam de mais atenção, reforço e investimento educativo.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h4>Total de tentativas</h4>
+            <p id="totalTentativas" style="font-size:2rem; font-weight:800; color:var(--primary); margin-top:10px;">0</p>
+          </div>
+
+          <div class="card">
+            <h4>Média de acertos</h4>
+            <p id="mediaAcertos" style="font-size:2rem; font-weight:800; color:var(--secondary); margin-top:10px;">0%</p>
+          </div>
+
+          <div class="card">
+            <h4>Tema com mais dificuldade</h4>
+            <p id="temaCritico" style="font-size:1.2rem; font-weight:800; margin-top:10px;">Ainda sem dados</p>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:20px;">
+          <h4 style="margin-top:0;">Erros por pergunta</h4>
+          <p class="small">Quanto maior a barra, maior a dificuldade encontrada pelos usuários naquela pergunta.</p>
+
+          <div id="barrasPerguntas" style="margin-top:18px; display:grid; gap:14px;"></div>
+
+          <div style="margin-top:20px; display:flex; gap:12px; flex-wrap:wrap;">
+            <button class="btn btn-primary hover-guide" onclick="atualizarDashboard()">Atualizar dashboard</button>
+            <button class="btn btn-soft hover-guide" onclick="limparDashboard()">Limpar dados</button>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
@@ -1228,14 +1300,30 @@
 
     function corrigirQuiz(){
       const perguntas = ['q1','q2','q3','q4','q5','q6','q7','q8'];
+      const textosPerguntas = {
+        q1: 'Conceito de link',
+        q2: 'Conceito de nuvem',
+        q3: 'Cadeado e HTTPS',
+        q4: 'Sinais de golpe',
+        q5: 'Senha forte',
+        q6: 'Cuidados com links suspeitos',
+        q7: 'Uso de serviços oficiais',
+        q8: 'Mensagens com prêmio e urgência'
+      };
+
       let pontos = 0;
       let respondidas = 0;
+      let erros = [];
 
       perguntas.forEach(q => {
         const escolhida = document.querySelector(`input[name="${q}"]:checked`);
         if(escolhida){
           respondidas++;
-          pontos += Number(escolhida.value);
+          const valor = Number(escolhida.value);
+          pontos += valor;
+          if(valor === 0){
+            erros.push(q);
+          }
         }
       });
 
@@ -1258,7 +1346,105 @@
         box.className = 'result-box show result-bad';
         box.innerHTML = `Você acertou ${pontos} de 8. Revise os conteúdos e pratique novamente. O importante é aprender aos poucos.`;
       }
+
+      registrarTentativaQuiz(pontos, erros, textosPerguntas);
+      atualizarDashboard();
     }
+
+    function registrarTentativaQuiz(acertos, erros, textosPerguntas){
+      const dados = JSON.parse(localStorage.getItem('quizDashboard')) || {
+        tentativas: 0,
+        somaAcertos: 0,
+        errosPorPergunta: {
+          q1: 0, q2: 0, q3: 0, q4: 0,
+          q5: 0, q6: 0, q7: 0, q8: 0
+        }
+      };
+
+      dados.tentativas += 1;
+      dados.somaAcertos += acertos;
+
+      erros.forEach(q => {
+        if(dados.errosPorPergunta[q] !== undefined){
+          dados.errosPorPergunta[q] += 1;
+        }
+      });
+
+      localStorage.setItem('quizDashboard', JSON.stringify(dados));
+    }
+
+    function atualizarDashboard(){
+      const dados = JSON.parse(localStorage.getItem('quizDashboard')) || {
+        tentativas: 0,
+        somaAcertos: 0,
+        errosPorPergunta: {
+          q1: 0, q2: 0, q3: 0, q4: 0,
+          q5: 0, q6: 0, q7: 0, q8: 0
+        }
+      };
+
+      const nomesPerguntas = {
+        q1: 'Conceito de link',
+        q2: 'Conceito de nuvem',
+        q3: 'Cadeado e HTTPS',
+        q4: 'Sinais de golpe',
+        q5: 'Senha forte',
+        q6: 'Cuidados com links suspeitos',
+        q7: 'Uso de serviços oficiais',
+        q8: 'Mensagens com prêmio e urgência'
+      };
+
+      document.getElementById('totalTentativas').textContent = dados.tentativas;
+
+      let media = 0;
+      if(dados.tentativas > 0){
+        media = (dados.somaAcertos / (dados.tentativas * 8)) * 100;
+      }
+      document.getElementById('mediaAcertos').textContent = media.toFixed(1) + '%';
+
+      let perguntaMaisCritica = 'Ainda sem dados';
+      let maiorErro = -1;
+
+      Object.entries(dados.errosPorPergunta).forEach(([chave, valor]) => {
+        if(valor > maiorErro){
+          maiorErro = valor;
+          perguntaMaisCritica = nomesPerguntas[chave];
+        }
+      });
+
+      if(dados.tentativas === 0){
+        perguntaMaisCritica = 'Ainda sem dados';
+      }
+
+      document.getElementById('temaCritico').textContent = perguntaMaisCritica;
+
+      const barras = document.getElementById('barrasPerguntas');
+      barras.innerHTML = '';
+
+      Object.entries(dados.errosPorPergunta).forEach(([chave, valor]) => {
+        const percentual = dados.tentativas > 0 ? (valor / dados.tentativas) * 100 : 0;
+
+        const item = document.createElement('div');
+        item.className = 'bar-item';
+
+        item.innerHTML = `
+          <div class="bar-label">${nomesPerguntas[chave]}</div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:${percentual.toFixed(1)}%"></div>
+          </div>
+          <div class="bar-value">${valor} erro(s) • ${percentual.toFixed(1)}% das tentativas</div>
+        `;
+
+        barras.appendChild(item);
+      });
+    }
+
+    function limparDashboard(){
+      localStorage.removeItem('quizDashboard');
+      atualizarDashboard();
+    }
+
+    document.addEventListener('DOMContentLoaded', atualizarDashboard);
   </script>
 </body>
 </html>
